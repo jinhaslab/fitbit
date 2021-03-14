@@ -1,0 +1,116 @@
+---
+title: "fitbit"
+author: "jinha"
+date: '2021 3 14 '
+output: html_document
+---
+
+ The reference url is "https://www.r-bloggers.com/2019/06/downloading-fitbit-data-histories-with-r/", "https://github.com/teramonagi/fitbitr/tree/master/R", and "https://github.com/corynissen/fitbitScraper", and "https://willrenius.com/2019/01/02/how-to-download-all-your-fitbit-data/"
+ https://hydroecology.net/getting-detailed-fitbit-data-with-r/
+ 
+```{r update packages,  message = FALSE}
+#update.packages(ask = FALSE)
+```
+ 
+ 
+# overview
+
+ we needed authorification and API path
+
+
+```{r load library, message = FALSE}
+library(httr)
+library(tidyverse)
+library(stringr)
+library(jsonlite)
+library(lubridate)
+```
+
+## retriving heart rate data
+
+```{r}
+auth.code = paste("jinha", "22C5KN")
+
+```
+
+
+
+
+ Get a all file list
+ 
+```{r}
+root.data.path <- "../data/MyFitbitData/WillRenius/user-site-export/"
+data.files <- list.files(root.data.path)
+```
+
+
+
+
+
+
+## git origin add
+
+```{r}
+# git remote add origin https://github.com/jinhaslab/fitbit
+
+```
+
+
+# tutor by teramonagi
+## library install
+
+```{r fitbitr install, message = FALSE, warning=FALSE}
+if (!require("devtools")) install.packages('devtools')
+if (!require("fitbitr")) devtools:: install_github("teramonagi/fitbitr")
+library(fitbitr)
+library("ggplot2")
+library(tidyverse)
+```
+
+
+```{r load sn list, message = FALSE, }
+sect = readRDS('secret/sec.RDS')
+```
+
+
+```{r fitbit autho, message = FALSE}
+FITTBIT_name = sect %>% filter(fitbit_id == 1) %>% pull(fitbit_name)
+FITBIT_KEY   = sect %>% filter(fitbit_id == 1) %>% pull(fitbit_key)
+FITBIT_SECRET= sect %>% filter(fitbit_id == 1) %>% pull(fitbit_secret)
+
+```
+
+```{r create token, message = FALSE, echo = FALSE}
+#token= fitbitr::oauth_token()
+```
+```{r}
+#tokens <- list("1" = token, 
+#               "2" = token)
+#saveRDS(tokens, 'token/tokens.rds')
+```
+
+```{r, message = FALSE, echo = FALSE}
+tokens = readRDS('token/tokens.rds')
+```
+
+### Activity
+
+```{r get activity}
+date <- "2021-03-10"
+token <- tokens[[1]]
+activity = (get_activity_summary(token, date))
+```
+
+
+
+
+
+## Set-up
+### Create a Developer Account
+### Set up the R Environment
+
+## Obtain Step Count Data
+
+## Obtain Heart Rate Data
+
+
